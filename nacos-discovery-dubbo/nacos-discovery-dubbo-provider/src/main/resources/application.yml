@@ -1,0 +1,36 @@
+spring:
+  profiles:
+    active: true
+dubbo:
+  scan:
+    base-packages: com.jztx.gm.demo
+  protocol:
+    name: dubbo
+    port: -1
+  registry:
+    address: nacos://192.168.2.36:8848
+    group: DEFAULT_GROUP
+    parameters:
+      namespace: 18041d6e-77a1-4b5e-8a76-eb8c7456dad5
+  metadata-report:
+    address: nacos://192.168.2.36:8848
+    username: nacos
+    password: nacos
+    # 配置 namespace，有namespace需要指定namespace
+    parameters:
+      namespace: 18041d6e-77a1-4b5e-8a76-eb8c7456dad5
+    # 配置 隔离组，有配置 group 的需要指定 group
+    group: DEFAULT_GROUP
+  application:
+    logger: slf4j
+    # 元数据中心 local 本地 remote 远程 这里使用远程便于其他服务获取
+    metadataType: remote
+    # 可选值 interface、instance、all，默认是 all，即接口级地址、应用级地址都注册
+    register-mode: instance
+    service-discovery:
+      # FORCE_INTERFACE，只消费接口级地址，如无地址则报错，单订阅 2.x 地址
+      # APPLICATION_FIRST，智能决策接口级/应用级地址，双订阅
+      # FORCE_APPLICATION，只消费应用级地址，如无地址则报错，单订阅 3.x 地址
+      migration: FORCE_APPLICATION
+  cloud:
+    subscribed-services: /
